@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.admin-desktop {
+    display: none;
+}
+
+.admin-mobile {
+    display: none;
+}
+
+.btn-contact {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.map {
+    width: 75%;
+    height: 350px;
+}
+
+.grid-cards div:nth-child(2) {
+    background-color: #0F172A;
+}
+
+.grid-cards div:nth-child(2) div h3 {
+    color: #fff;
+}
+
+.grid-cards div:nth-child(2) ul li p {
+    color: #fff;
+}
+
+.grid-cards div:nth-child(2) ul li ul li {
+    color: #CBD5E1;
+}
