@@ -10,7 +10,7 @@ const generateUUID = () => {
     return crypto.randomUUID();
   }
   // Fallback for environments without crypto.randomUUID
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     const r = Math.random() * 16 | 0;
     const v = c === 'x' ? r : (r & 0x3 | 0x8);
     return v.toString(16);
@@ -47,21 +47,21 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   // Auth State Listener
   useEffect(() => {
     checkAuth();
-    
+
     // Escuchar cambios en localStorage (para cuando se hace login/logout en otra pestaña)
     const handleStorageChange = () => {
       checkAuth();
     };
-    
+
     window.addEventListener('storage', handleStorageChange);
-    
+
     // También escuchar eventos personalizados para cambios en la misma pestaña
     const handleAuthChange = () => {
       checkAuth();
     };
-    
+
     window.addEventListener('auth-changed', handleAuthChange);
-    
+
     return () => {
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('auth-changed', handleAuthChange);
@@ -77,7 +77,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const fetchData = async () => {
       try {
         setLoading(true);
-        
+
         const apiContent = await contentAPI.getContent();
         const newContent: SiteContent = { ...initialMockData };
 
@@ -111,7 +111,8 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       });
 
       const data = await contentAPI.updateSlider(cleanSlides);
-      setContent(prev => ({ ...prev, slider: data as SliderSlide[] }));
+      // Backend returns { success: true }, so we use the data we sent
+      setContent(prev => ({ ...prev, slider: cleanSlides }));
     } catch (error) {
       console.error('Error updating slider:', error);
       toast.error('Error al guardar slider');
@@ -122,7 +123,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const updateTips = async (tips: MaintenanceTip) => {
     try {
       const data = await contentAPI.updateTips(tips);
-      setContent(prev => ({ ...prev, tips: data }));
+      setContent(prev => ({ ...prev, tips: tips }));
     } catch (error) {
       console.error('Error updating tips:', error);
       toast.error('Error al guardar consejos');
@@ -142,7 +143,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       });
 
       const data = await contentAPI.updateGallery(cleanImages);
-      setContent(prev => ({ ...prev, gallery: data as GalleryImage[] }));
+      setContent(prev => ({ ...prev, gallery: cleanImages }));
     } catch (error) {
       console.error('Error updating gallery:', error);
       toast.error('Error al guardar galería');
@@ -153,7 +154,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const updateContact = async (contact: ContactInfo) => {
     try {
       const data = await contentAPI.updateContact(contact);
-      setContent(prev => ({ ...prev, contact: data }));
+      setContent(prev => ({ ...prev, contact: contact }));
     } catch (error) {
       console.error('Error updating contact:', error);
       toast.error('Error al guardar contacto');
@@ -167,7 +168,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       const cleanServices = services.map(s => {
         const isTempId = s.id.length < 15 && !isNaN(Number(s.id));
         const serviceId = isTempId ? generateUUID() : s.id;
-        
+
         const cleanItems = s.items.map(item => {
           const isItemTempId = item.id.length < 15 && !isNaN(Number(item.id));
           return {
@@ -184,7 +185,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       });
 
       const data = await contentAPI.updateServices(cleanServices);
-      setContent(prev => ({ ...prev, services: data as Service[] }));
+      setContent(prev => ({ ...prev, services: cleanServices }));
     } catch (error) {
       console.error('Error updating services:', error);
       toast.error('Error al guardar servicios');
@@ -192,8 +193,8 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   };
 
-  const login = () => {}; // Handled by API now
-  
+  const login = () => { }; // Handled by API now
+
   const logout = async () => {
     authAPI.logout();
     setIsAdmin(false);
@@ -202,12 +203,12 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   };
 
   return (
-    <ContentContext.Provider value={{ 
-      content, 
-      loading, 
-      updateSlider, 
-      updateTips, 
-      updateGallery, 
+    <ContentContext.Provider value={{
+      content,
+      loading,
+      updateSlider,
+      updateTips,
+      updateGallery,
       updateContact,
       updateServices,
       isAdmin,
