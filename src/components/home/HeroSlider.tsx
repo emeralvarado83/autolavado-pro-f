@@ -10,14 +10,6 @@ export const HeroSlider = () => {
   const slides = content.slider.filter(s => s.active);
   const [current, setCurrent] = useState(0);
 
-  if (loading) {
-    return (
-      <div className="h-[600px] w-full bg-slate-900 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
-      </div>
-    );
-  }
-
   useEffect(() => {
     if (slides.length <= 1) return;
     const timer = setInterval(() => {
@@ -25,6 +17,14 @@ export const HeroSlider = () => {
     }, 5000);
     return () => clearInterval(timer);
   }, [slides.length]);
+
+  if (loading) {
+    return (
+      <div className="h-[600px] w-full bg-slate-900 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
+      </div>
+    );
+  }
 
   const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);
   const prevSlide = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
