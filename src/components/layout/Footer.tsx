@@ -22,7 +22,7 @@ export const Footer = () => {
               </div>
             ) : (
               <h3 className="text-2xl font-bold text-white">
-                AutoLavado<span className="text-blue-500">Pro</span>
+                AutoLavaggio<span className="text-blue-500">Pro</span>
               </h3>
             )}
             <p className="text-slate-400">
@@ -68,7 +68,7 @@ export const Footer = () => {
         </div>
 
         <div className="border-t border-slate-800 mt-12 pt-8 text-center text-sm text-slate-500">
-          <p>© {new Date().getFullYear()} AutoLavadoPro. Tutti i diritti riservati.</p>
+          <p>© {new Date().getFullYear()} AutoLavaggioPro. Tutti i diritti riservati.</p>
         </div>
       </div>
     </footer>

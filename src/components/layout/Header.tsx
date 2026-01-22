@@ -22,11 +22,11 @@ export const Header = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Inicio', href: '/', type: 'scroll' },
-    { name: 'Consejos', href: '#consejos', type: 'scroll' },
-    { name: 'Galería', href: '#galeria', type: 'scroll' },
-    { name: 'Servicios', href: '#services', type: 'scroll' },
-    { name: 'Contacto', href: '#contacto', type: 'scroll' },
+    { name: 'Inizio', href: '/', type: 'scroll' },
+    { name: 'Consigli', href: '#consejos', type: 'scroll' },
+    { name: 'Galleria', href: '#galeria', type: 'scroll' },
+    { name: 'Servizi', href: '#services', type: 'scroll' },
+    { name: 'Contatto', href: '#contacto', type: 'scroll' },
   ];
 
   const scrollToSection = (id: string) => {
@@ -84,7 +84,7 @@ export const Header = () => {
                   scrolled ? "text-slate-800" : "text-white"
                 )}
               >
-                AutoLavado<span className="text-blue-500">Pro</span>
+                AutoLavaggio<span className="text-blue-500">Pro</span>
               </span>
             </>
           )}
@@ -134,7 +134,7 @@ export const Header = () => {
               className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-700 transition-colors flex items-center gap-2"
             >
               <Settings size={16} />
-              Panel
+              Pannello
             </Link>
           ) : (
             <Link
@@ -146,7 +146,7 @@ export const Header = () => {
                   : "border-white text-white hover:bg-white/10"
               )}
             >
-              Admin
+              Amm.
             </Link>
           )}
         </nav>
@@ -201,7 +201,7 @@ export const Header = () => {
               onClick={() => setIsOpen(false)}
               className="text-center bg-blue-600 text-white py-3 rounded-lg font-medium admin-mobile"
             >
-              Acceso Admin
+              Accesso Amm.
             </Link>
           </div>
         </div>
