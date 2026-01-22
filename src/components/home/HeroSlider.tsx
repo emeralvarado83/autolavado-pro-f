@@ -6,9 +6,17 @@ import { cn } from '../../lib/utils';
 import { MessageCircle } from 'lucide-react';
 
 export const HeroSlider = () => {
-  const { content } = useContent();
+  const { content, loading } = useContent();
   const slides = content.slider.filter(s => s.active);
   const [current, setCurrent] = useState(0);
+
+  if (loading) {
+    return (
+      <div className="h-[600px] w-full bg-slate-900 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
+      </div>
+    );
+  }
 
   useEffect(() => {
     if (slides.length <= 1) return;
@@ -35,7 +43,7 @@ export const HeroSlider = () => {
           className="absolute inset-0"
         >
           {/* Background Image with Overlay */}
-          <div 
+          <div
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url(${slides[current].image_url})` }}
           >
@@ -44,7 +52,7 @@ export const HeroSlider = () => {
 
           {/* Content */}
           <div className="relative h-full container mx-auto px-4 flex flex-col justify-center items-center text-center text-white z-10">
-            <motion.h1 
+            <motion.h1
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -53,7 +61,7 @@ export const HeroSlider = () => {
               {slides[current].title}
             </motion.h1>
             {slides[current].subtitle && (
-              <motion.p 
+              <motion.p
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4 }}
@@ -80,19 +88,19 @@ export const HeroSlider = () => {
       {/* Controls */}
       {slides.length > 1 && (
         <>
-          <button 
+          <button
             onClick={prevSlide}
             className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white backdrop-blur-sm transition-colors z-20"
           >
             <ChevronLeft size={32} />
           </button>
-          <button 
+          <button
             onClick={nextSlide}
             className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white backdrop-blur-sm transition-colors z-20"
           >
             <ChevronRight size={32} />
           </button>
-          
+
           {/* Dots */}
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
             {slides.map((_, idx) => (

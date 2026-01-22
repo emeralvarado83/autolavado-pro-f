@@ -3,8 +3,16 @@ import { useContent } from '../../context/ContentContext';
 import { motion } from 'framer-motion';
 
 export const Gallery = () => {
-  const { content } = useContent();
+  const { content, loading } = useContent();
   const images = content.gallery.filter(img => img.active);
+
+  if (loading) {
+    return (
+      <section id="galeria" className="py-20 bg-slate-50 min-h-[400px] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-600"></div>
+      </section>
+    );
+  }
 
   return (
     <section id="galeria" className="py-20 bg-slate-50">
@@ -26,9 +34,9 @@ export const Gallery = () => {
               transition={{ delay: idx * 0.1 }}
               className="group relative aspect-[4/3] rounded-2xl overflow-hidden shadow-md cursor-pointer"
             >
-              <img 
-                src={image.url} 
-                alt={`Gallery ${idx + 1}`} 
+              <img
+                src={image.url}
+                alt={`Gallery ${idx + 1}`}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />

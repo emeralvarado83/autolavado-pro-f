@@ -4,15 +4,23 @@ import { motion } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 
 export const TipsSection = () => {
-  const { content } = useContent();
+  const { content, loading } = useContent();
   const { tips } = content;
+
+  if (loading) {
+    return (
+      <section id="consejos" className="py-20 bg-white min-h-[400px] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-600"></div>
+      </section>
+    );
+  }
 
   return (
     <section id="consejos" className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center gap-12">
           {/* Text Content */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -44,7 +52,7 @@ export const TipsSection = () => {
           </motion.div>
 
           {/* Image */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -52,9 +60,9 @@ export const TipsSection = () => {
             className="flex-1 relative"
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3]">
-              <img 
-                src={tips.image_url} 
-                alt="Car maintenance" 
+              <img
+                src={tips.image_url}
+                alt="Car maintenance"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
