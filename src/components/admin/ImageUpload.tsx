@@ -31,13 +31,13 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ value, onChange, class
 
       if (response.data.url) {
         onChange(response.data.url);
-        toast.success('Imagen subida correctamente');
+        toast.success('Immagine caricata correttamente');
       } else {
-        throw new Error('No se recibió la URL de la imagen');
+        throw new Error('URL dell\'immagine non ricevuto');
       }
     } catch (error: any) {
       console.error('Error uploading image:', error);
-      const errorMessage = error.response?.data?.error || error.message || 'Error al subir la imagen';
+      const errorMessage = error.response?.data?.error || error.message || 'Errore durante il caricamento dell\'immagine';
       toast.error(errorMessage);
     } finally {
       setUploading(false);
@@ -86,7 +86,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ value, onChange, class
         <>
           <Upload className="text-slate-400 mb-2" size={32} />
           <p className="text-sm text-slate-500 font-medium">
-            {isDragActive ? "Suelta la imagen aquí" : "Click o arrastra imagen"}
+            {isDragActive ? "Rilascia l'immagine qui" : "Clicca o trascina l'immagine"}
           </p>
         </>
       )}

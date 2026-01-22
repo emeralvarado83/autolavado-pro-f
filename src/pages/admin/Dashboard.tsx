@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import * as LucideIcons from 'lucide-react';
 
-const Tabs = ['Slider', 'Consejos', 'Galería', 'Contacto', 'Servicios'];
+const Tabs = ['Slider', 'Consigli', 'Galleria', 'Contatti', 'Servizi'];
 
 export const Dashboard = () => {
   const { content, loading, updateSlider, updateTips, updateGallery, updateContact, updateServices, logout } = useContent();
@@ -77,10 +77,10 @@ export const Dashboard = () => {
               )}
             >
               {tab === 'Slider' && <Layout size={20} />}
-              {tab === 'Consejos' && <ImageIcon size={20} />}
-              {tab === 'Galería' && <ImageIcon size={20} />}
-              {tab === 'Contacto' && <Settings size={20} />}
-              {tab === 'Servicios' && <Wrench size={20} />}
+              {tab === 'Consigli' && <ImageIcon size={20} />}
+              {tab === 'Galleria' && <ImageIcon size={20} />}
+              {tab === 'Contatti' && <Settings size={20} />}
+              {tab === 'Servizi' && <Wrench size={20} />}
               {tab}
             </button>
           ))}
@@ -91,7 +91,7 @@ export const Dashboard = () => {
             className="w-full flex items-center gap-2 text-red-600 hover:bg-red-50 px-4 py-2 rounded-lg transition-colors"
           >
             <LogOut size={20} />
-            Cerrar Sesión
+            Esci
           </button>
         </div>
       </aside>
@@ -100,7 +100,7 @@ export const Dashboard = () => {
       <main className="flex-1 md:ml-64 p-8">
         <div className="max-w-4xl mx-auto">
           <div className="flex justify-between items-center mb-8">
-            <h1 className="text-2xl font-bold text-slate-800">Gestión de {activeTab}</h1>
+            <h1 className="text-2xl font-bold text-slate-800">Gestione {activeTab}</h1>
             <div className="md:hidden">
               <button onClick={handleLogout} className="text-red-600">
                 <LogOut size={24} />
@@ -127,7 +127,7 @@ export const Dashboard = () => {
                           }}
                           className="rounded text-blue-600 focus:ring-blue-500"
                         />
-                        Activo
+                        Attivo
                       </label>
                       <button
                         onClick={() => setSliderData(sliderData.filter(s => s.id !== slide.id))}
@@ -141,7 +141,7 @@ export const Dashboard = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-4">
                       <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-1">Título</label>
+                        <label className="block text-sm font-medium text-slate-700 mb-1">Titolo</label>
                         <input
                           value={slide.title}
                           onChange={(e) => {
@@ -153,7 +153,7 @@ export const Dashboard = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-1">Subtítulo</label>
+                        <label className="block text-sm font-medium text-slate-700 mb-1">Sottotitolo</label>
                         <input
                           value={slide.subtitle || ''}
                           onChange={(e) => {
@@ -165,7 +165,7 @@ export const Dashboard = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-1">Imagen</label>
+                        <label className="block text-sm font-medium text-slate-700 mb-1">Immagine</label>
                         <ImageUpload
                           value={slide.image_url}
                           onChange={(url) => {
@@ -180,7 +180,7 @@ export const Dashboard = () => {
                       {slide.image_url ? (
                         <img src={slide.image_url} alt="Preview" className="w-full h-full object-cover" />
                       ) : (
-                        <span className="text-slate-400 text-sm">Sin imagen</span>
+                        <span className="text-slate-400 text-sm">Nessuna immagine</span>
                       )}
                     </div>
                   </div>
@@ -192,30 +192,30 @@ export const Dashboard = () => {
                   onClick={() => setSliderData([...sliderData, {
                     id: Date.now().toString(),
                     image_url: '',
-                    title: 'Nuevo Slide',
+                    title: 'Nuovo Slide',
                     active: true
                   }])}
                   className="flex items-center gap-2 px-4 py-2 border border-dashed border-slate-300 rounded-lg text-slate-600 hover:bg-slate-50"
                 >
-                  <Plus size={20} /> Agregar Slide
+                  <Plus size={20} /> Aggiungi Slide
                 </button>
                 <button
-                  onClick={() => handleSave(() => updateSlider(sliderData), 'Slider actualizado')}
+                  onClick={() => handleSave(() => updateSlider(sliderData), 'Slider aggiornato')}
                   disabled={saving}
                   className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 ml-auto disabled:opacity-50"
                 >
                   {saving ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
-                  Guardar Cambios
+                  Salva Modifiche
                 </button>
               </div>
             </div>
           )}
 
           {/* TIPS EDITOR */}
-          {activeTab === 'Consejos' && (
+          {activeTab === 'Consigli' && (
             <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-6">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Título Sección</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Titolo Sezione</label>
                 <input
                   value={tipsData.title}
                   onChange={(e) => setTipsData({ ...tipsData, title: e.target.value })}
@@ -223,7 +223,7 @@ export const Dashboard = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Descripción</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Descrizione</label>
                 <textarea
                   value={tipsData.description}
                   onChange={(e) => setTipsData({ ...tipsData, description: e.target.value })}
@@ -231,7 +231,7 @@ export const Dashboard = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Imagen Decorativa</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Immagine Decorativa</label>
                 <div className="flex gap-4 flex-col md:flex-row">
                   <div className="flex-1">
                     <ImageUpload
@@ -248,19 +248,19 @@ export const Dashboard = () => {
               </div>
               <div className="flex justify-end">
                 <button
-                  onClick={() => handleSave(() => updateTips(tipsData), 'Consejos actualizados')}
+                  onClick={() => handleSave(() => updateTips(tipsData), 'Consigli aggiornati')}
                   disabled={saving}
                   className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
                 >
                   {saving ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
-                  Guardar Cambios
+                  Salva Modifiche
                 </button>
               </div>
             </div>
           )}
 
           {/* GALLERY EDITOR */}
-          {activeTab === 'Galería' && (
+          {activeTab === 'Galleria' && (
             <div className="space-y-6">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {galleryData.map((img, idx) => (
@@ -293,9 +293,9 @@ export const Dashboard = () => {
                             "p-2 rounded-full",
                             img.active ? "bg-green-500 text-white" : "bg-gray-500 text-white"
                           )}
-                          title={img.active ? "Desactivar" : "Activar"}
+                          title={img.active ? "Disattiva" : "Attiva"}
                         >
-                          {img.active ? "Visible" : "Oculto"}
+                          {img.active ? "Visibile" : "Nascosto"}
                         </button>
                         <button
                           onClick={() => setGalleryData(galleryData.filter(g => g.id !== img.id))}
@@ -312,28 +312,28 @@ export const Dashboard = () => {
                   className="aspect-square border-2 border-dashed border-slate-300 rounded-lg flex flex-col items-center justify-center text-slate-500 hover:bg-slate-50 hover:border-blue-400 hover:text-blue-500 transition-colors"
                 >
                   <Plus size={32} />
-                  <span className="text-sm font-medium">Agregar Imagen</span>
+                  <span className="text-sm font-medium">Aggiungi Immagine</span>
                 </button>
               </div>
               <div className="flex justify-end">
                 <button
-                  onClick={() => handleSave(() => updateGallery(galleryData), 'Galería actualizada')}
+                  onClick={() => handleSave(() => updateGallery(galleryData), 'Galleria aggiornata')}
                   disabled={saving}
                   className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
                 >
                   {saving ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
-                  Guardar Cambios
+                  Salva Modifiche
                 </button>
               </div>
             </div>
           )}
 
           {/* CONTACT EDITOR */}
-          {activeTab === 'Contacto' && (
+          {activeTab === 'Contatti' && (
             <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Dirección</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Indirizzo</label>
                   <input
                     value={contactData.address}
                     onChange={(e) => setContactData({ ...contactData, address: e.target.value })}
@@ -341,7 +341,7 @@ export const Dashboard = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Teléfono</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Telefono</label>
                   <input
                     value={contactData.phone}
                     onChange={(e) => setContactData({ ...contactData, phone: e.target.value })}
@@ -357,7 +357,7 @@ export const Dashboard = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">WhatsApp (Opcional)</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">WhatsApp (Opzionale)</label>
                   <input
                     value={contactData.whatsapp || ''}
                     onChange={(e) => setContactData({ ...contactData, whatsapp: e.target.value })}
@@ -365,7 +365,7 @@ export const Dashboard = () => {
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Horario de Atención</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Orari di Apertura</label>
                   <input
                     value={contactData.hours}
                     onChange={(e) => setContactData({ ...contactData, hours: e.target.value })}
@@ -373,7 +373,7 @@ export const Dashboard = () => {
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-700 mb-2">Logo (Header y Footer)</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Logo (Header e Footer)</label>
                   <div className="flex flex-col md:flex-row gap-4 items-start">
                     <div className="w-full md:w-64">
                       <ImageUpload
@@ -392,30 +392,30 @@ export const Dashboard = () => {
                     )}
                   </div>
                   <p className="mt-2 text-xs text-slate-500">
-                    Este logo se mostrará en el encabezado y en el pie de página del sitio. Formato recomendado: PNG o SVG con fondo transparente.
+                    Questo logo verrà mostrato nell'intestazione e nel piè di pagina del sito. Formato consigliato: PNG o SVG con sfondo trasparente.
                   </p>
                 </div>
               </div>
               <div className="flex justify-end">
                 <button
-                  onClick={() => handleSave(() => updateContact(contactData), 'Contacto actualizado')}
+                  onClick={() => handleSave(() => updateContact(contactData), 'Contatti aggiornati')}
                   disabled={saving}
                   className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
                 >
                   {saving ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
-                  Guardar Cambios
+                  Salva Modifiche
                 </button>
               </div>
             </div>
           )}
 
           {/* SERVICES EDITOR */}
-          {activeTab === 'Servicios' && (
+          {activeTab === 'Servizi' && (
             <div className="space-y-6">
               {servicesData.map((service, serviceIdx) => (
                 <div key={service.id} className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                   <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-lg font-semibold text-slate-700">Servicio #{serviceIdx + 1}</h3>
+                    <h3 className="text-lg font-semibold text-slate-700">Servizio #{serviceIdx + 1}</h3>
                     <button
                       onClick={() => setServicesData(servicesData.filter(s => s.id !== service.id))}
                       className="text-red-500 hover:bg-red-50 p-1 rounded"
@@ -426,7 +426,7 @@ export const Dashboard = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Título</label>
+                      <label className="block text-sm font-medium text-slate-700 mb-1">Titolo</label>
                       <input
                         value={service.title}
                         onChange={(e) => {
@@ -438,7 +438,7 @@ export const Dashboard = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Icono (nombre de lucide-react)</label>
+                      <label className="block text-sm font-medium text-slate-700 mb-1">Icona (nome di lucide-react)</label>
                       <input
                         value={service.icon_name}
                         onChange={(e) => {
@@ -446,38 +446,38 @@ export const Dashboard = () => {
                           newServices[serviceIdx].icon_name = e.target.value;
                           setServicesData(newServices);
                         }}
-                        placeholder="Ej: Car, Sparkles, ShieldCheck"
+                        placeholder="Es: Car, Sparkles, ShieldCheck"
                         className="w-full p-2 border rounded-lg"
                       />
                       <p className="mt-1 text-xs text-slate-500">
-                        Usa nombres de iconos de lucide-react (Car, Sparkles, ShieldCheck, etc.)
+                        Usa nomi di icone di lucide-react (Car, Sparkles, ShieldCheck, etc.)
                       </p>
                     </div>
                   </div>
 
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <label className="block text-sm font-medium text-slate-700">Items del Servicio</label>
+                      <label className="block text-sm font-medium text-slate-700">Elementi del Servizio</label>
                       <button
                         onClick={() => {
                           const newServices = [...servicesData];
                           newServices[serviceIdx].items.push({
                             id: Date.now().toString(),
-                            name: 'Nuevo Item',
+                            name: 'Nuovo Elemento',
                             description: ['']
                           });
                           setServicesData(newServices);
                         }}
                         className="flex items-center gap-2 px-3 py-1 text-sm border border-dashed border-slate-300 rounded-lg text-slate-600 hover:bg-slate-50"
                       >
-                        <Plus size={16} /> Agregar Item
+                        <Plus size={16} /> Aggiungi Elemento
                       </button>
                     </div>
 
                     {service.items.map((item, itemIdx) => (
                       <div key={item.id} className="border border-slate-200 rounded-lg p-4 space-y-3">
                         <div className="flex justify-between items-center">
-                          <h4 className="text-sm font-medium text-slate-700">Item #{itemIdx + 1}</h4>
+                          <h4 className="text-sm font-medium text-slate-700">Elemento #{itemIdx + 1}</h4>
                           <button
                             onClick={() => {
                               const newServices = [...servicesData];
@@ -491,7 +491,7 @@ export const Dashboard = () => {
                         </div>
 
                         <div>
-                          <label className="block text-sm font-medium text-slate-700 mb-1">Nombre</label>
+                          <label className="block text-sm font-medium text-slate-700 mb-1">Nome</label>
                           <input
                             value={item.name}
                             onChange={(e) => {
@@ -504,7 +504,7 @@ export const Dashboard = () => {
                         </div>
 
                         <div>
-                          <label className="block text-sm font-medium text-slate-700 mb-1">Descripciones (una por línea)</label>
+                          <label className="block text-sm font-medium text-slate-700 mb-1">Descrizioni (una per riga)</label>
                           <textarea
                             value={item.description.join('\n')}
                             onChange={(e) => {
@@ -513,10 +513,10 @@ export const Dashboard = () => {
                               setServicesData(newServices);
                             }}
                             className="w-full p-2 border rounded-lg h-24"
-                            placeholder="Agua a presión + jabón&#10;Enjuague y secado"
+                            placeholder="Acqua ad alta pressione + sapone&#10;Risciacquo e asciugatura"
                           />
                           <p className="mt-1 text-xs text-slate-500">
-                            Escribe cada descripción en una línea separada
+                            Scrivi ogni descrizione su una riga separata
                           </p>
                         </div>
                       </div>
@@ -529,21 +529,21 @@ export const Dashboard = () => {
                 <button
                   onClick={() => setServicesData([...servicesData, {
                     id: Date.now().toString(),
-                    title: 'Nuevo Servicio',
+                    title: 'Nuovo Servizio',
                     icon_name: 'Car',
                     items: []
                   }])}
                   className="flex items-center gap-2 px-4 py-2 border border-dashed border-slate-300 rounded-lg text-slate-600 hover:bg-slate-50"
                 >
-                  <Plus size={20} /> Agregar Servicio
+                  <Plus size={20} /> Aggiungi Servizio
                 </button>
                 <button
-                  onClick={() => handleSave(() => updateServices(servicesData), 'Servicios actualizados')}
+                  onClick={() => handleSave(() => updateServices(servicesData), 'Servizi aggiornati')}
                   disabled={saving}
                   className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 ml-auto disabled:opacity-50"
                 >
                   {saving ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
-                  Guardar Cambios
+                  Salva Modifiche
                 </button>
               </div>
             </div>

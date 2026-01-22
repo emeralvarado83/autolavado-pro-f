@@ -90,7 +90,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         setContent(newContent);
       } catch (error) {
         console.error('Error fetching data:', error);
-        toast.error('Error cargando contenido');
+        toast.error('Errore durante il caricamento del contenuto');
       } finally {
         setLoading(false);
       }
@@ -115,7 +115,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       setContent(prev => ({ ...prev, slider: cleanSlides }));
     } catch (error) {
       console.error('Error updating slider:', error);
-      toast.error('Error al guardar slider');
+      toast.error('Errore durante il salvataggio dello slider');
       throw error;
     }
   };
@@ -126,7 +126,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       setContent(prev => ({ ...prev, tips: tips }));
     } catch (error) {
       console.error('Error updating tips:', error);
-      toast.error('Error al guardar consejos');
+      toast.error('Errore durante il salvataggio dei consigli');
       throw error;
     }
   };
@@ -146,7 +146,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       setContent(prev => ({ ...prev, gallery: cleanImages }));
     } catch (error) {
       console.error('Error updating gallery:', error);
-      toast.error('Error al guardar galería');
+      toast.error('Errore durante il salvataggio della galleria');
       throw error;
     }
   };
@@ -157,7 +157,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       setContent(prev => ({ ...prev, contact: contact }));
     } catch (error) {
       console.error('Error updating contact:', error);
-      toast.error('Error al guardar contacto');
+      toast.error('Errore durante il salvataggio dei contatti');
       throw error;
     }
   };
@@ -188,7 +188,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       setContent(prev => ({ ...prev, services: cleanServices }));
     } catch (error) {
       console.error('Error updating services:', error);
-      toast.error('Error al guardar servicios');
+      toast.error('Errore durante il salvataggio dei servizi');
       throw error;
     }
   };

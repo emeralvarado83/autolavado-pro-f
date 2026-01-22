@@ -40,8 +40,8 @@ export const Login = () => {
       <SEO title="Admin Login | Autolavado Pro" />
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-slate-900">Panel de Administración</h1>
-          <p className="text-slate-500">Inicia sesión para gestionar el contenido</p>
+          <h1 className="text-2xl font-bold text-slate-900">Pannello di Amministrazione</h1>
+          <p className="text-slate-500">Accedi per gestire i contenuti</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -61,7 +61,7 @@ export const Login = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Contraseña</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Password</label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
               <input
@@ -80,12 +80,12 @@ export const Login = () => {
             disabled={loading}
             className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
           >
-            {loading ? <Loader2 className="animate-spin" size={20} /> : 'Ingresar'}
+            {loading ? <Loader2 className="animate-spin" size={20} /> : 'Accedi'}
           </button>
         </form>
 
         <div className="mt-6 text-center text-sm text-slate-500">
-          <p>Credenciales por defecto: admin@example.com / admin123</p>
+          <p>Credenziali predefinite: admin@example.com / admin123</p>
         </div>
       </div>
     </div>

@@ -76,9 +76,9 @@ export const HeroSlider = () => {
               transition={{ delay: 0.6 }}
               className="mt-8"
             >
-              <a href="https://wa.me/393930091236?text=Hola%20👋%20Gracias%20por%20contactarnos.%20¿En%20qué%20podemos%20ayudarte%20hoy%3F" target='_blank' className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-semibold transition-all transform hover:scale-105 btn-contact">
+              <a href="https://wa.me/393930091236?text=Ciao%20👋%20Grazie%20per%20averci%20contattato.%20Come%20possiamo%20aiutarti%20oggi%3F" target='_blank' className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-semibold transition-all transform hover:scale-105 btn-contact">
                 <MessageCircle className="text-white shrink-0" size={20} />
-                Contáctanos
+                Contattaci
               </a>
             </motion.div>
           </div>

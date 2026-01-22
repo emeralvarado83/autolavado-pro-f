@@ -29,7 +29,7 @@ export const TipsSection = () => {
           >
             <div className="inline-flex items-center gap-2 text-blue-600 font-semibold bg-blue-50 px-4 py-2 rounded-full">
               <Sparkles size={20} />
-              <span>Consejos de Mantenimiento</span>
+              <span>Consigli di Manutenzione</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
               {tips.title}
@@ -40,12 +40,12 @@ export const TipsSection = () => {
             <div className="pt-4">
               <div className="grid grid-cols-2 gap-6">
                 <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
-                  <h3 className="font-bold text-slate-800 mb-2">Protección UV</h3>
-                  <p className="text-sm text-slate-500">Evita el desgaste prematuro de la pintura.</p>
+                  <h3 className="font-bold text-slate-800 mb-2">Protezione UV</h3>
+                  <p className="text-sm text-slate-500">Previene l'usura prematura della vernice.</p>
                 </div>
                 <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
-                  <h3 className="font-bold text-slate-800 mb-2">Brillo Duradero</h3>
-                  <p className="text-sm text-slate-500">Mantén tu auto como nuevo por más tiempo.</p>
+                  <h3 className="font-bold text-slate-800 mb-2">Brillantezza Duratura</h3>
+                  <p className="text-sm text-slate-500">Mantieni la tua auto come nuova più a lungo.</p>
                 </div>
               </div>
             </div>

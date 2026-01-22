@@ -78,11 +78,11 @@ export const Services = () => {
         {/* Header */}
         <div className="text-center mb-14">
           <h2 className="text-4xl font-bold text-slate-900">
-            Nuestros Servicios
+            I Nostri Servizi
           </h2>
           <p className="mt-4 text-slate-600 max-w-2xl mx-auto">
-            Ofrecemos soluciones completas para el cuidado y mantenimiento de tu vehículo,
-            desde lavados básicos hasta servicios especializados.
+            Offriamo soluzioni complete per la cura e la manutenzione del tuo veicolo,
+            dai lavaggi base ai servizi specializzati.
           </p>
         </div>
 
