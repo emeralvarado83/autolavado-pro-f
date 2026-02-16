@@ -68,10 +68,7 @@ export const contentAPI = {
     const response = await api.put('/tips', tips);
     return response.data;
   },
-  updateGallery: async (images: any[]) => {
-    const response = await api.put('/gallery', images);
-    return response.data;
-  },
+
   updateContact: async (contact: any) => {
     const response = await api.put('/contact', contact);
     return response.data;

@@ -8,10 +8,10 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import * as LucideIcons from 'lucide-react';
 
-const Tabs = ['Slider', 'Consigli', 'Galleria', 'Contatti', 'Servizi'];
+const Tabs = ['Slider', 'Consigli', 'Contatti', 'Servizi'];
 
 export const Dashboard = () => {
-  const { content, loading, updateSlider, updateTips, updateGallery, updateContact, updateServices, logout } = useContent();
+  const { content, loading, updateSlider, updateTips, updateContact, updateServices, logout } = useContent();
   const [activeTab, setActiveTab] = useState('Slider');
   const navigate = useNavigate();
   const [saving, setSaving] = useState(false);
@@ -19,7 +19,7 @@ export const Dashboard = () => {
   // Local state for forms
   const [sliderData, setSliderData] = useState(content.slider);
   const [tipsData, setTipsData] = useState(content.tips);
-  const [galleryData, setGalleryData] = useState(content.gallery);
+
   const [contactData, setContactData] = useState(content.contact);
   const [servicesData, setServicesData] = useState(content.services);
 
@@ -27,7 +27,7 @@ export const Dashboard = () => {
   useEffect(() => {
     setSliderData(content.slider);
     setTipsData(content.tips);
-    setGalleryData(content.gallery);
+
     setContactData(content.contact);
     setServicesData(content.services);
   }, [content]);
@@ -78,7 +78,7 @@ export const Dashboard = () => {
             >
               {tab === 'Slider' && <Layout size={20} />}
               {tab === 'Consigli' && <ImageIcon size={20} />}
-              {tab === 'Galleria' && <ImageIcon size={20} />}
+
               {tab === 'Contatti' && <Settings size={20} />}
               {tab === 'Servizi' && <Wrench size={20} />}
               {tab}
@@ -259,74 +259,6 @@ export const Dashboard = () => {
             </div>
           )}
 
-          {/* GALLERY EDITOR */}
-          {activeTab === 'Galleria' && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {galleryData.map((img, idx) => (
-                  <div key={img.id} className="relative group aspect-square bg-slate-100 rounded-lg overflow-hidden border border-slate-200">
-                    {img.url ? (
-                      <img src={img.url} alt="Gallery" className="w-full h-full object-cover" />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center p-2">
-                        <ImageUpload
-                          value={img.url}
-                          onChange={(url) => {
-                            const newGallery = [...galleryData];
-                            newGallery[idx].url = url;
-                            setGalleryData(newGallery);
-                          }}
-                          className="w-full h-full border-0"
-                        />
-                      </div>
-                    )}
-
-                    {img.url && (
-                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                        <button
-                          onClick={() => {
-                            const newGallery = [...galleryData];
-                            newGallery[idx].active = !newGallery[idx].active;
-                            setGalleryData(newGallery);
-                          }}
-                          className={cn(
-                            "p-2 rounded-full",
-                            img.active ? "bg-green-500 text-white" : "bg-gray-500 text-white"
-                          )}
-                          title={img.active ? "Disattiva" : "Attiva"}
-                        >
-                          {img.active ? "Visibile" : "Nascosto"}
-                        </button>
-                        <button
-                          onClick={() => setGalleryData(galleryData.filter(g => g.id !== img.id))}
-                          className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                ))}
-                <button
-                  onClick={() => setGalleryData([...galleryData, { id: Date.now().toString(), url: '', active: true }])}
-                  className="aspect-square border-2 border-dashed border-slate-300 rounded-lg flex flex-col items-center justify-center text-slate-500 hover:bg-slate-50 hover:border-blue-400 hover:text-blue-500 transition-colors"
-                >
-                  <Plus size={32} />
-                  <span className="text-sm font-medium">Aggiungi Immagine</span>
-                </button>
-              </div>
-              <div className="flex justify-end">
-                <button
-                  onClick={() => handleSave(() => updateGallery(galleryData), 'Galleria aggiornata')}
-                  disabled={saving}
-                  className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
-                >
-                  {saving ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
-                  Salva Modifiche
-                </button>
-              </div>
-            </div>
-          )}
 
           {/* CONTACT EDITOR */}
           {activeTab === 'Contatti' && (

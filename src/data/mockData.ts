@@ -16,10 +16,7 @@ export const initialMockData: SiteContent = {
     description: 'La cera agisce come una barriera protettiva contro i raggi UV, la pioggia acida e lo sporco della strada. Consigliamo di incerare il veicolo almeno ogni 3 mesi per mantenere la vernice brillante e protetta più a lungo.',
     image_url: 'https://i.imgur.com/rDvaIQN.jpeg'
   },
-  gallery: [
-    { id: '1', url: 'https://i.imgur.com/M7X3LnG.png', active: true },
-    { id: '2', url: 'https://i.imgur.com/otCRAtS.png', active: true }
-  ],
+
   contact: {
     address: 'Via Roma 123, Milano',
     phone: '+39 02 1234 5678',

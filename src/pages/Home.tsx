@@ -2,7 +2,7 @@ import React from 'react';
 import { SEO } from '../components/common/SEO';
 import { HeroSlider } from '../components/home/HeroSlider';
 import { TipsSection } from '../components/home/TipsSection';
-import { Gallery } from '../components/home/Gallery';
+
 import { Services } from '../components/home/Services';
 
 export const Home = () => {
@@ -14,7 +14,7 @@ export const Home = () => {
       />
       <HeroSlider />
       <TipsSection />
-      <Gallery />
+
       <Services />
     </main>
   );

@@ -13,11 +13,6 @@ export interface MaintenanceTip {
   image_url: string;
 }
 
-export interface GalleryImage {
-  id: string;
-  url: string;
-  active: boolean;
-}
 
 export interface ContactInfo {
   address: string;
@@ -44,7 +39,7 @@ export interface Service {
 export interface SiteContent {
   slider: SliderSlide[];
   tips: MaintenanceTip;
-  gallery: GalleryImage[];
+
   contact: ContactInfo;
   services: Service[];
 }

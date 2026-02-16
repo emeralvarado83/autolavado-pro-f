@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { SiteContent, SliderSlide, MaintenanceTip, GalleryImage, ContactInfo, Service } from '../types';
+import { SiteContent, SliderSlide, MaintenanceTip, ContactInfo, Service } from '../types';
 import { initialMockData } from '../data/mockData';
 import { contentAPI, authAPI } from '../lib/api';
 import toast from 'react-hot-toast';
@@ -22,7 +22,7 @@ interface ContentContextType {
   loading: boolean;
   updateSlider: (slides: SliderSlide[]) => Promise<void>;
   updateTips: (tips: MaintenanceTip) => Promise<void>;
-  updateGallery: (images: GalleryImage[]) => Promise<void>;
+
   updateContact: (contact: ContactInfo) => Promise<void>;
   updateServices: (services: Service[]) => Promise<void>;
   isAdmin: boolean;
@@ -83,7 +83,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
         if (apiContent.slider && apiContent.slider.length > 0) newContent.slider = apiContent.slider;
         if (apiContent.tips) newContent.tips = apiContent.tips;
-        if (apiContent.gallery && apiContent.gallery.length > 0) newContent.gallery = apiContent.gallery;
+
         if (apiContent.contact) newContent.contact = apiContent.contact;
         if (apiContent.services && apiContent.services.length > 0) newContent.services = apiContent.services;
 
@@ -131,25 +131,6 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   };
 
-  const updateGallery = async (images: GalleryImage[]) => {
-    try {
-      // Generar UUIDs para imágenes nuevas
-      const cleanImages = images.map(img => {
-        const isTempId = img.id.length < 15 && !isNaN(Number(img.id));
-        if (isTempId) {
-          return { ...img, id: generateUUID() };
-        }
-        return img;
-      });
-
-      const data = await contentAPI.updateGallery(cleanImages);
-      setContent(prev => ({ ...prev, gallery: cleanImages }));
-    } catch (error) {
-      console.error('Error updating gallery:', error);
-      toast.error('Errore durante il salvataggio della galleria');
-      throw error;
-    }
-  };
 
   const updateContact = async (contact: ContactInfo) => {
     try {
@@ -208,7 +189,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       loading,
       updateSlider,
       updateTips,
-      updateGallery,
+
       updateContact,
       updateServices,
       isAdmin,
