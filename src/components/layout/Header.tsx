@@ -24,7 +24,6 @@ export const Header = () => {
   const navLinks = [
     { name: 'Inizio', href: '/', type: 'scroll' },
     { name: 'Consigli', href: '#consejos', type: 'scroll' },
-    { name: 'Galleria', href: '#galeria', type: 'scroll' },
     { name: 'Servizi', href: '#services', type: 'scroll' },
     { name: 'Contatto', href: '#contacto', type: 'scroll' },
   ];
