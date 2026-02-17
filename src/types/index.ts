@@ -31,18 +31,30 @@ export interface ServiceItem {
 
 export interface Service {
   id: string;
+  category_id?: string;
+  subcategory_id?: string;
   title: string;
   icon_name: string;
   display_order?: number;
   items: ServiceItem[];
 }
 
+export interface VehicleSubcategory {
+  id: string;
+  name: string;
+  image_url?: string;
+  display_order: number;
+  services: Service[];
+}
+
 export interface VehicleCategory {
   id: string;
   name: string;
   image_url: string;
+  has_subcategories?: boolean;
   display_order: number;
   services: Service[];
+  subcategories?: VehicleSubcategory[];
 }
 
 export interface SiteContent {

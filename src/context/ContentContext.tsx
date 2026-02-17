@@ -183,29 +183,45 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         const isCatTempId = cat.id.length < 15 && !isNaN(Number(cat.id));
         const catId = isCatTempId ? generateUUID() : cat.id;
 
-        const cleanServices = (cat.services || []).map((s: any) => {
-          const isServiceTempId = s.id.length < 15 && !isNaN(Number(s.id));
-          const serviceId = isServiceTempId ? generateUUID() : s.id;
+        const processServices = (services: any[]) => {
+          return (services || []).map((s: any) => {
+            const isServiceTempId = s.id.length < 15 && !isNaN(Number(s.id));
+            const serviceId = isServiceTempId ? generateUUID() : s.id;
 
-          const cleanItems = (s.items || []).map((item: any) => {
-            const isItemTempId = item.id.length < 15 && !isNaN(Number(item.id));
+            const cleanItems = (s.items || []).map((item: any) => {
+              const isItemTempId = item.id.length < 15 && !isNaN(Number(item.id));
+              return {
+                ...item,
+                id: isItemTempId ? generateUUID() : item.id
+              };
+            });
+
             return {
-              ...item,
-              id: isItemTempId ? generateUUID() : item.id
+              ...s,
+              id: serviceId,
+              items: cleanItems
             };
           });
+        };
+
+        const cleanServices = processServices(cat.services);
+
+        const cleanSubcategories = (cat.subcategories || []).map((sub: any) => {
+          const isSubTempId = sub.id.length < 15 && !isNaN(Number(sub.id));
+          const subId = isSubTempId ? generateUUID() : sub.id;
 
           return {
-            ...s,
-            id: serviceId,
-            items: cleanItems
+            ...sub,
+            id: subId,
+            services: processServices(sub.services)
           };
         });
 
         return {
           ...cat,
           id: catId,
-          services: cleanServices
+          services: cleanServices,
+          subcategories: cleanSubcategories
         };
       });
 
