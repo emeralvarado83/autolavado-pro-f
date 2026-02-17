@@ -77,6 +77,10 @@ export const contentAPI = {
     const response = await api.put('/services', services);
     return response.data;
   },
+  updateVehicleCategories: async (categories: any[]) => {
+    const response = await api.put('/vehicle-categories', categories);
+    return response.data;
+  },
 };
 
 export default api;

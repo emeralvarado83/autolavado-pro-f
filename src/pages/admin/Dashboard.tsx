@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useContent } from '../../context/ContentContext';
 import { SEO } from '../../components/common/SEO';
-import { Trash2, Plus, Save, Image as ImageIcon, Layout, Settings, LogOut, Loader2, Wrench } from 'lucide-react';
+import { Trash2, Plus, Save, Image as ImageIcon, Layout, Settings, LogOut, Loader2, Car, ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { ImageUpload } from '../../components/admin/ImageUpload';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import * as LucideIcons from 'lucide-react';
 
-const Tabs = ['Slider', 'Consigli', 'Contatti', 'Servizi'];
+const Tabs = ['Slider', 'Consigli', 'Contatti', 'Categorie Veicoli'];
 
 export const Dashboard = () => {
-  const { content, loading, updateSlider, updateTips, updateContact, updateServices, logout } = useContent();
+  const { content, loading, updateSlider, updateTips, updateContact, updateVehicleCategories, logout } = useContent();
   const [activeTab, setActiveTab] = useState('Slider');
   const navigate = useNavigate();
   const [saving, setSaving] = useState(false);
@@ -21,7 +21,8 @@ export const Dashboard = () => {
   const [tipsData, setTipsData] = useState(content.tips);
 
   const [contactData, setContactData] = useState(content.contact);
-  const [servicesData, setServicesData] = useState(content.services);
+  const [categoriesData, setCategoriesData] = useState(content.vehicleCategories || []);
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
   // Sync local state when content loads from DB
   useEffect(() => {
@@ -29,7 +30,7 @@ export const Dashboard = () => {
     setTipsData(content.tips);
 
     setContactData(content.contact);
-    setServicesData(content.services);
+    setCategoriesData(content.vehicleCategories || []);
   }, [content]);
 
   const handleLogout = async () => {
@@ -48,6 +49,10 @@ export const Dashboard = () => {
       setSaving(false);
     }
   }
+
+  const toggleCategoryExpand = (id: string) => {
+    setExpandedCategory(expandedCategory === id ? null : id);
+  };
 
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center"><Loader2 className="animate-spin text-blue-600" size={40} /></div>;
@@ -80,7 +85,7 @@ export const Dashboard = () => {
               {tab === 'Consigli' && <ImageIcon size={20} />}
 
               {tab === 'Contatti' && <Settings size={20} />}
-              {tab === 'Servizi' && <Wrench size={20} />}
+              {tab === 'Categorie Veicoli' && <Car size={20} />}
               {tab}
             </button>
           ))}
@@ -341,136 +346,253 @@ export const Dashboard = () => {
             </div>
           )}
 
-          {/* SERVICES EDITOR */}
-          {activeTab === 'Servizi' && (
+          {/* VEHICLE CATEGORIES EDITOR */}
+          {activeTab === 'Categorie Veicoli' && (
             <div className="space-y-6">
-              {servicesData.map((service, serviceIdx) => (
-                <div key={service.id} className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-lg font-semibold text-slate-700">Servizio #{serviceIdx + 1}</h3>
-                    <button
-                      onClick={() => setServicesData(servicesData.filter(s => s.id !== service.id))}
-                      className="text-red-500 hover:bg-red-50 p-1 rounded"
-                    >
-                      <Trash2 size={18} />
-                    </button>
-                  </div>
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-blue-800 text-sm mb-6">
+                <p>
+                  Qui puoi gestire le categorie di veicoli (Moto, Auto, ecc.).
+                  Per ogni categoria, puoi caricare un'immagine di copertina e gestire i servizi specifici.
+                </p>
+              </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Titolo</label>
-                      <input
-                        value={service.title}
-                        onChange={(e) => {
-                          const newServices = [...servicesData];
-                          newServices[serviceIdx].title = e.target.value;
-                          setServicesData(newServices);
-                        }}
-                        className="w-full p-2 border rounded-lg"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Icona (nome di lucide-react)</label>
-                      <input
-                        value={service.icon_name}
-                        onChange={(e) => {
-                          const newServices = [...servicesData];
-                          newServices[serviceIdx].icon_name = e.target.value;
-                          setServicesData(newServices);
-                        }}
-                        placeholder="Es: Car, Sparkles, ShieldCheck"
-                        className="w-full p-2 border rounded-lg"
-                      />
-                      <p className="mt-1 text-xs text-slate-500">
-                        Usa nomi di icone di lucide-react (Car, Sparkles, ShieldCheck, etc.)
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <label className="block text-sm font-medium text-slate-700">Elementi del Servizio</label>
+              {categoriesData.map((category, catIdx) => (
+                <div key={category.id} className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                  <div className="flex justify-between items-center mb-6">
+                    <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2">
+                      <span className="bg-slate-100 text-slate-500 px-2 py-1 rounded text-sm">#{catIdx + 1}</span>
+                      {category.name || 'Nuova Categoria'}
+                    </h3>
+                    <div className="flex items-center gap-2">
                       <button
-                        onClick={() => {
-                          const newServices = [...servicesData];
-                          newServices[serviceIdx].items.push({
-                            id: Date.now().toString(),
-                            name: 'Nuovo Elemento',
-                            description: ['']
-                          });
-                          setServicesData(newServices);
-                        }}
-                        className="flex items-center gap-2 px-3 py-1 text-sm border border-dashed border-slate-300 rounded-lg text-slate-600 hover:bg-slate-50"
+                        onClick={() => toggleCategoryExpand(category.id)}
+                        className="flex items-center gap-1 text-blue-600 hover:bg-blue-50 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
                       >
-                        <Plus size={16} /> Aggiungi Elemento
+                        {expandedCategory === category.id ? (
+                          <>
+                            <ChevronUp size={16} /> Nascondi Dettagli
+                          </>
+                        ) : (
+                          <>
+                            <ChevronDown size={16} /> Gestisci Servizi
+                          </>
+                        )}
+                      </button>
+                      <button
+                        onClick={() => setCategoriesData(categoriesData.filter(c => c.id !== category.id))}
+                        className="text-red-500 hover:bg-red-50 p-2 rounded-lg transition-colors"
+                        title="Elimina Categoria"
+                      >
+                        <Trash2 size={18} />
                       </button>
                     </div>
-
-                    {service.items.map((item, itemIdx) => (
-                      <div key={item.id} className="border border-slate-200 rounded-lg p-4 space-y-3">
-                        <div className="flex justify-between items-center">
-                          <h4 className="text-sm font-medium text-slate-700">Elemento #{itemIdx + 1}</h4>
-                          <button
-                            onClick={() => {
-                              const newServices = [...servicesData];
-                              newServices[serviceIdx].items = newServices[serviceIdx].items.filter(i => i.id !== item.id);
-                              setServicesData(newServices);
-                            }}
-                            className="text-red-500 hover:bg-red-50 p-1 rounded"
-                          >
-                            <Trash2 size={16} />
-                          </button>
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-medium text-slate-700 mb-1">Nome</label>
-                          <input
-                            value={item.name}
-                            onChange={(e) => {
-                              const newServices = [...servicesData];
-                              newServices[serviceIdx].items[itemIdx].name = e.target.value;
-                              setServicesData(newServices);
-                            }}
-                            className="w-full p-2 border rounded-lg"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-medium text-slate-700 mb-1">Descrizioni (una per riga)</label>
-                          <textarea
-                            value={item.description.join('\n')}
-                            onChange={(e) => {
-                              const newServices = [...servicesData];
-                              newServices[serviceIdx].items[itemIdx].description = e.target.value.split('\n').filter(d => d.trim());
-                              setServicesData(newServices);
-                            }}
-                            className="w-full p-2 border rounded-lg h-24"
-                            placeholder="Acqua ad alta pressione + sapone&#10;Risciacquo e asciugatura"
-                          />
-                          <p className="mt-1 text-xs text-slate-500">
-                            Scrivi ogni descrizione su una riga separata
-                          </p>
-                        </div>
-                      </div>
-                    ))}
                   </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-1">Nome Categoria</label>
+                      <input
+                        value={category.name}
+                        onChange={(e) => {
+                          const newCats = [...categoriesData];
+                          newCats[catIdx].name = e.target.value;
+                          setCategoriesData(newCats);
+                        }}
+                        className="w-full p-2 border rounded-lg"
+                        placeholder="Es: SUV, Moto, Furgone"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-1">Ordine</label>
+                      <input
+                        type="number"
+                        value={category.display_order || 0}
+                        onChange={(e) => {
+                          const newCats = [...categoriesData];
+                          newCats[catIdx].display_order = parseInt(e.target.value) || 0;
+                          setCategoriesData(newCats);
+                        }}
+                        className="w-full p-2 border rounded-lg"
+                      />
+                    </div>
+                    <div className="md:col-span-1">
+                      <label className="block text-sm font-medium text-slate-700 mb-1">Immagine Copertina</label>
+                      <div className="flex gap-2">
+                        <div className="flex-1">
+                          <ImageUpload
+                            value={category.image_url}
+                            onChange={(url) => {
+                              const newCats = [...categoriesData];
+                              newCats[catIdx].image_url = url;
+                              setCategoriesData(newCats);
+                            }}
+                          />
+                        </div>
+                        {category.image_url && (
+                          <div className="w-16 h-10 bg-slate-100 rounded border border-slate-200 overflow-hidden shrink-0">
+                            <img src={category.image_url} alt="Preview" className="w-full h-full object-cover" />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Expanded Services Section */}
+                  {expandedCategory === category.id && (
+                    <div className="border-t border-slate-100 pt-6 mt-6 animate-in fade-in slide-in-from-top-2 duration-200">
+                      <div className="flex justify-between items-center mb-4">
+                        <h4 className="font-semibold text-slate-700">Servizi per {category.name}</h4>
+                        <button
+                          onClick={() => {
+                            const newCats = [...categoriesData];
+                            if (!newCats[catIdx].services) newCats[catIdx].services = [];
+                            newCats[catIdx].services.push({
+                              id: Date.now().toString(),
+                              title: 'Nuovo Servizio',
+                              icon_name: 'Car',
+                              display_order: newCats[catIdx].services.length + 1,
+                              items: []
+                            });
+                            setCategoriesData(newCats);
+                          }}
+                          className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 text-sm font-medium"
+                        >
+                          <Plus size={16} /> Aggiungi Servizio
+                        </button>
+                      </div>
+
+                      <div className="space-y-4">
+                        {(!category.services || category.services.length === 0) ? (
+                          <div className="text-center py-8 bg-slate-50 rounded-lg border border-dashed border-slate-200">
+                            <p className="text-slate-500 text-sm">Nessun servizio aggiunto a questa categoria.</p>
+                          </div>
+                        ) : (
+                          category.services.map((service, serviceIdx) => (
+                            <div key={service.id} className="border border-slate-200 rounded-lg p-4 bg-slate-50/50">
+                              <div className="flex justify-between items-start mb-4">
+                                <h5 className="font-medium text-slate-700">Servizio #{serviceIdx + 1}</h5>
+                                <button
+                                  onClick={() => {
+                                    const newCats = [...categoriesData];
+                                    newCats[catIdx].services = newCats[catIdx].services.filter(s => s.id !== service.id);
+                                    setCategoriesData(newCats);
+                                  }}
+                                  className="text-red-500 hover:bg-red-50 p-1 rounded"
+                                >
+                                  <Trash2 size={16} />
+                                </button>
+                              </div>
+
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                  <label className="block text-xs font-medium text-slate-500 mb-1">Titolo Servizio</label>
+                                  <input
+                                    value={service.title}
+                                    onChange={(e) => {
+                                      const newCats = [...categoriesData];
+                                      newCats[catIdx].services[serviceIdx].title = e.target.value;
+                                      setCategoriesData(newCats);
+                                    }}
+                                    className="w-full p-2 border rounded text-sm"
+                                  />
+                                </div>
+                                <div>
+                                  <label className="block text-xs font-medium text-slate-500 mb-1">Icona (lucide-react)</label>
+                                  <input
+                                    value={service.icon_name}
+                                    onChange={(e) => {
+                                      const newCats = [...categoriesData];
+                                      newCats[catIdx].services[serviceIdx].icon_name = e.target.value;
+                                      setCategoriesData(newCats);
+                                    }}
+                                    className="w-full p-2 border rounded text-sm"
+                                    placeholder="Es: Car, Sparkles, ShieldCheck"
+                                  />
+                                </div>
+                              </div>
+
+                              {/* Service Items */}
+                              <div className="space-y-3 pl-4 border-l-2 border-slate-200">
+                                <div className="flex justify-between items-center">
+                                  <label className="text-xs font-medium text-slate-500">Dettagli / Pacchetti</label>
+                                  <button
+                                    onClick={() => {
+                                      const newCats = [...categoriesData];
+                                      if (!newCats[catIdx].services[serviceIdx].items) newCats[catIdx].services[serviceIdx].items = [];
+                                      newCats[catIdx].services[serviceIdx].items.push({
+                                        id: Date.now().toString(),
+                                        name: 'Nuovo Pacchetto',
+                                        description: ['']
+                                      });
+                                      setCategoriesData(newCats);
+                                    }}
+                                    className="text-xs text-blue-600 hover:underline flex items-center gap-1"
+                                  >
+                                    <Plus size={12} /> Aggiungi Pacchetto
+                                  </button>
+                                </div>
+
+                                {service.items && service.items.map((item, itemIdx) => (
+                                  <div key={item.id} className="bg-white border border-slate-200 rounded p-3 text-sm">
+                                    <div className="flex justify-between mb-2">
+                                      <input
+                                        value={item.name}
+                                        onChange={(e) => {
+                                          const newCats = [...categoriesData];
+                                          newCats[catIdx].services[serviceIdx].items[itemIdx].name = e.target.value;
+                                          setCategoriesData(newCats);
+                                        }}
+                                        className="font-medium text-slate-700 bg-transparent border-0 border-b border-transparent hover:border-slate-300 focus:border-blue-500 focus:ring-0 w-full px-0 py-0.5"
+                                        placeholder="Nome pacchetto"
+                                      />
+                                      <button
+                                        onClick={() => {
+                                          const newCats = [...categoriesData];
+                                          newCats[catIdx].services[serviceIdx].items = newCats[catIdx].services[serviceIdx].items.filter(i => i.id !== item.id);
+                                          setCategoriesData(newCats);
+                                        }}
+                                        className="text-red-400 hover:text-red-600 ml-2"
+                                      >
+                                        <Trash2 size={14} />
+                                      </button>
+                                    </div>
+                                    <textarea
+                                      value={Array.isArray(item.description) ? item.description.join('\n') : item.description}
+                                      onChange={(e) => {
+                                        const newCats = [...categoriesData];
+                                        newCats[catIdx].services[serviceIdx].items[itemIdx].description = e.target.value.split('\n');
+                                        setCategoriesData(newCats);
+                                      }}
+                                      className="w-full p-2 border rounded text-xs text-slate-600 h-16"
+                                      placeholder="Caratteristiche (una per riga)"
+                                    />
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
 
               <div className="flex gap-4">
                 <button
-                  onClick={() => setServicesData([...servicesData, {
+                  onClick={() => setCategoriesData([...categoriesData, {
                     id: Date.now().toString(),
-                    title: 'Nuovo Servizio',
-                    icon_name: 'Car',
-                    items: []
+                    name: 'Nuova Categoria',
+                    image_url: '',
+                    display_order: categoriesData.length + 1,
+                    services: []
                   }])}
                   className="flex items-center gap-2 px-4 py-2 border border-dashed border-slate-300 rounded-lg text-slate-600 hover:bg-slate-50"
                 >
-                  <Plus size={20} /> Aggiungi Servizio
+                  <Plus size={20} /> Aggiungi Categoria
                 </button>
                 <button
-                  onClick={() => handleSave(() => updateServices(servicesData), 'Servizi aggiornati')}
+                  onClick={() => handleSave(() => updateVehicleCategories(categoriesData), 'Categorie aggiornate')}
                   disabled={saving}
                   className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 ml-auto disabled:opacity-50"
                 >

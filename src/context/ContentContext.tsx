@@ -25,6 +25,7 @@ interface ContentContextType {
 
   updateContact: (contact: ContactInfo) => Promise<void>;
   updateServices: (services: Service[]) => Promise<void>;
+  updateVehicleCategories: (categories: any[]) => Promise<void>;
   isAdmin: boolean;
   login: () => void; // Deprecated, kept for compatibility but unused internally
   logout: () => Promise<void>;
@@ -86,6 +87,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
         if (apiContent.contact) newContent.contact = apiContent.contact;
         if (apiContent.services && apiContent.services.length > 0) newContent.services = apiContent.services;
+        if (apiContent.vehicleCategories && apiContent.vehicleCategories.length > 0) newContent.vehicleCategories = apiContent.vehicleCategories;
 
         setContent(newContent);
       } catch (error) {
@@ -174,6 +176,48 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   };
 
+  const updateVehicleCategories = async (categories: any[]) => {
+    try {
+      // Generate UUIDs for new entities
+      const cleanCategories = categories.map(cat => {
+        const isCatTempId = cat.id.length < 15 && !isNaN(Number(cat.id));
+        const catId = isCatTempId ? generateUUID() : cat.id;
+
+        const cleanServices = (cat.services || []).map((s: any) => {
+          const isServiceTempId = s.id.length < 15 && !isNaN(Number(s.id));
+          const serviceId = isServiceTempId ? generateUUID() : s.id;
+
+          const cleanItems = (s.items || []).map((item: any) => {
+            const isItemTempId = item.id.length < 15 && !isNaN(Number(item.id));
+            return {
+              ...item,
+              id: isItemTempId ? generateUUID() : item.id
+            };
+          });
+
+          return {
+            ...s,
+            id: serviceId,
+            items: cleanItems
+          };
+        });
+
+        return {
+          ...cat,
+          id: catId,
+          services: cleanServices
+        };
+      });
+
+      await contentAPI.updateVehicleCategories(cleanCategories);
+      setContent(prev => ({ ...prev, vehicleCategories: cleanCategories }));
+    } catch (error) {
+      console.error('Error updating vehicle categories:', error);
+      toast.error('Errore durante il salvataggio delle categorie');
+      throw error;
+    }
+  };
+
   const login = () => { }; // Handled by API now
 
   const logout = async () => {
@@ -192,6 +236,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
       updateContact,
       updateServices,
+      updateVehicleCategories,
       isAdmin,
       login,
       logout,

@@ -33,7 +33,16 @@ export interface Service {
   id: string;
   title: string;
   icon_name: string;
+  display_order?: number;
   items: ServiceItem[];
+}
+
+export interface VehicleCategory {
+  id: string;
+  name: string;
+  image_url: string;
+  display_order: number;
+  services: Service[];
 }
 
 export interface SiteContent {
@@ -41,5 +50,6 @@ export interface SiteContent {
   tips: MaintenanceTip;
 
   contact: ContactInfo;
-  services: Service[];
+  services: Service[]; // Deprecated but kept for backward compatibility if needed
+  vehicleCategories: VehicleCategory[];
 }
