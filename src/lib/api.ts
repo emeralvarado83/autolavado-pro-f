@@ -36,8 +36,8 @@ export const contentAPI = {
       { data: serviceItems },
     ] = await Promise.all([
       supabase.from('slider').select('*').order('created_at', { ascending: false }),
-      supabase.from('tips').select('*').limit(1).single(),
-      supabase.from('contact').select('*').limit(1).single(),
+      supabase.from('tips').select('*').limit(1).maybeSingle(),
+      supabase.from('contact').select('*').limit(1).maybeSingle(),
       supabase.from('vehicle_categories').select('*').order('display_order', { ascending: true }),
       supabase.from('vehicle_subcategories').select('*').order('display_order', { ascending: true }),
       supabase.from('services').select('*').order('display_order', { ascending: true }),

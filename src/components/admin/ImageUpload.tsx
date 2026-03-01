@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Upload, Loader2, X } from 'lucide-react';
-import api from '../../lib/api';
 import { cn } from '../../lib/utils';
 import toast from 'react-hot-toast';
+
+// Cloudinary config — update these with your values
+const CLOUDINARY_CLOUD_NAME = 'dxuhy3wiy';
+const CLOUDINARY_UPLOAD_PRESET = 'autolavado_unsigned'; // Create an unsigned preset in Cloudinary dashboard
 
 interface ImageUploadProps {
   value: string;
@@ -21,24 +24,23 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ value, onChange, class
     setUploading(true);
     try {
       const formData = new FormData();
-      formData.append('image', file);
+      formData.append('file', file);
+      formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+      formData.append('folder', 'autolavado-pro');
 
-      const response = await api.post('/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+        { method: 'POST', body: formData }
+      );
 
-      if (response.data.url) {
-        onChange(response.data.url);
-        toast.success('Immagine caricata correttamente');
-      } else {
-        throw new Error('URL dell\'immagine non ricevuto');
-      }
+      if (!response.ok) throw new Error('Error al subir la imagen');
+
+      const data = await response.json();
+      onChange(data.secure_url);
+      toast.success('Imagen cargada correctamente');
     } catch (error: any) {
       console.error('Error uploading image:', error);
-      const errorMessage = error.response?.data?.error || error.message || 'Errore durante il caricamento dell\'immagine';
-      toast.error(errorMessage);
+      toast.error(error.message || 'Error al cargar la imagen');
     } finally {
       setUploading(false);
     }
