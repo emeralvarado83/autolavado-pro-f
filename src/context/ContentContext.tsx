@@ -40,8 +40,8 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [isAdmin, setIsAdmin] = useState(false);
 
   // Función para verificar autenticación
-  const checkAuth = React.useCallback(() => {
-    const authenticated = authAPI.isAuthenticated();
+  const checkAuth = React.useCallback(async () => {
+    const authenticated = await authAPI.isAuthenticated();
     setIsAdmin(authenticated);
   }, []);
 
@@ -86,7 +86,11 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         if (apiContent.tips) newContent.tips = apiContent.tips;
 
         if (apiContent.contact) newContent.contact = apiContent.contact;
-        if (apiContent.services && apiContent.services.length > 0) newContent.services = apiContent.services;
+        if (apiContent.services && apiContent.services.length > 0) {
+          newContent.services = apiContent.services;
+        } else {
+          newContent.services = [];
+        }
         if (apiContent.vehicleCategories && apiContent.vehicleCategories.length > 0) newContent.vehicleCategories = apiContent.vehicleCategories;
 
         setContent(newContent);
@@ -112,7 +116,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         return s;
       });
 
-      const data = await contentAPI.updateSlider(cleanSlides);
+      await contentAPI.updateSlider(cleanSlides);
       // Backend returns { success: true }, so we use the data we sent
       setContent(prev => ({ ...prev, slider: cleanSlides }));
     } catch (error) {
@@ -124,7 +128,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const updateTips = async (tips: MaintenanceTip) => {
     try {
-      const data = await contentAPI.updateTips(tips);
+      await contentAPI.updateTips(tips);
       setContent(prev => ({ ...prev, tips: tips }));
     } catch (error) {
       console.error('Error updating tips:', error);
@@ -136,7 +140,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const updateContact = async (contact: ContactInfo) => {
     try {
-      const data = await contentAPI.updateContact(contact);
+      await contentAPI.updateContact(contact);
       setContent(prev => ({ ...prev, contact: contact }));
     } catch (error) {
       console.error('Error updating contact:', error);
@@ -167,7 +171,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         };
       });
 
-      const data = await contentAPI.updateServices(cleanServices);
+      await contentAPI.updateServices(cleanServices);
       setContent(prev => ({ ...prev, services: cleanServices }));
     } catch (error) {
       console.error('Error updating services:', error);
@@ -237,7 +241,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const login = () => { }; // Handled by API now
 
   const logout = async () => {
-    authAPI.logout();
+    await authAPI.logout();
     setIsAdmin(false);
     // Disparar evento para actualizar en otras pestañas
     window.dispatchEvent(new Event('storage'));
