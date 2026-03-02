@@ -193,7 +193,7 @@ export const Dashboard = () => {
   return (
     <div className="min-h-screen bg-slate-100 flex">
       {/* ... (Sidebar and minimal code structure remains same until Vehicle Categories) */}
-      <SEO title={`Admin ${activeTab} | Autolavado Pro`} />
+      <SEO title={`Admin ${activeTab} | Centro Lavaggio Mosè`} />
       {/* Sidebar */}
       <aside className="w-64 bg-white shadow-lg fixed h-full z-10 hidden md:block">
         <div className="p-6 border-b">

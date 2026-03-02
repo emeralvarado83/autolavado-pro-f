@@ -12,11 +12,11 @@ interface SEOProps {
 
 export const SEO: React.FC<SEOProps> = ({
   title,
-  description = "Autolavado Pro - Il miglior autolavaggio per la tua auto.",
+  description = "Centro Lavaggio Mosè - Il miglior autolavaggio per la tua auto.",
   type = "website",
-  name = "Autolavado Pro",
-  image = "", // Add default OG image URL here if available
-  url = "https://autolavadopro.it"
+  name = "Centro Lavaggio Mosè",
+  image = "",
+  url = "https://centrolavaggiomose.it"
 }) => {
   return (
     <Helmet>

@@ -9,7 +9,7 @@ export const Home = () => {
   return (
     <main className="min-h-screen">
       <SEO
-        title="Autolavaggio Pro | Home"
+        title="Centro Lavaggio Mosè | Home"
         description="Il miglior servizio di lavaggio auto. Qualità e professionalità per il tuo veicolo."
       />
       <HeroSlider />

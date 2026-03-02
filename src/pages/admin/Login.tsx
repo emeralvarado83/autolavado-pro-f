@@ -37,7 +37,7 @@ export const Login = () => {
 
   return (
     <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
-      <SEO title="Admin Login | Autolavado Pro" />
+      <SEO title="Admin Login | Centro Lavaggio Mosè" />
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-slate-900">Pannello di Amministrazione</h1>
