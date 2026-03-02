@@ -7,6 +7,7 @@ import { Footer } from './components/layout/Footer';
 import { Home } from './pages/Home';
 import { Login } from './pages/admin/Login';
 import { Dashboard } from './pages/admin/Dashboard';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAdmin } = useContent();
@@ -29,6 +30,7 @@ function App() {
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<AppLayout><Home /></AppLayout>} />
+        <Route path="/privacy" element={<AppLayout><PrivacyPolicy /></AppLayout>} />
 
         {/* Admin Routes */}
         <Route path="/admin/login" element={<Login />} />

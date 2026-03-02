@@ -1,4 +1,3 @@
-import React from 'react';
 import { SEO } from '../components/common/SEO';
 import { HeroSlider } from '../components/home/HeroSlider';
 import { TipsSection } from '../components/home/TipsSection';
