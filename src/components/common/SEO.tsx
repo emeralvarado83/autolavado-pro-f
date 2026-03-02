@@ -62,6 +62,7 @@ export const SEO: React.FC<SEOProps> = ({
       <title>{title}</title>
       <meta name='description' content={description} />
       <link rel="canonical" href={url} />
+      <link rel="icon" type="image/png" href="/favicon.png" />
 
       {/* Structured Data */}
       <script type="application/ld+json">
