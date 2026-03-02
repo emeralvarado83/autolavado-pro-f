@@ -83,7 +83,7 @@ export const Header = () => {
                   scrolled ? "text-slate-800" : "text-white"
                 )}
               >
-                AutoLavaggio<span className="text-blue-500">Pro</span>
+                Centro Lavaggio<span className="text-blue-500"> Mosè</span>
               </span>
             </>
           )}
