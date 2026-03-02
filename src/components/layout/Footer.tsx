@@ -22,7 +22,7 @@ export const Footer = () => {
               </div>
             ) : (
               <h3 className="text-2xl font-bold text-white">
-                Centro Lavaggio<span className="text-blue-500">Mosè</span>
+                Centro Lavaggio<span className="text-blue-500"> Mosè</span>
               </h3>
             )}
             <p className="text-slate-400">
