@@ -8,6 +8,7 @@ import { Home } from './pages/Home';
 import { Login } from './pages/admin/Login';
 import { Dashboard } from './pages/admin/Dashboard';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import ScrollToTop from './components/common/ScrollToTop';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAdmin } = useContent();
@@ -15,9 +16,9 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
-const AppLayout = ({ children }: { children: React.ReactNode }) => (
+const AppLayout = ({ children, hideHeader = false }: { children: React.ReactNode, hideHeader?: boolean }) => (
   <>
-    <Header />
+    {!hideHeader && <Header />}
     {children}
     <Footer />
   </>
@@ -26,11 +27,12 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => (
 function App() {
   return (
     <ContentProvider>
+      <ScrollToTop />
       <Toaster position="top-right" />
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<AppLayout><Home /></AppLayout>} />
-        <Route path="/privacy" element={<AppLayout><PrivacyPolicy /></AppLayout>} />
+        <Route path="/privacy" element={<AppLayout hideHeader><PrivacyPolicy /></AppLayout>} />
 
         {/* Admin Routes */}
         <Route path="/admin/login" element={<Login />} />

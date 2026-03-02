@@ -1,13 +1,28 @@
 import { SEO } from '../components/common/SEO';
+import { Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 
 const PrivacyPolicy = () => {
     return (
-        <div className="min-h-screen bg-white pt-24 pb-16">
+        <div className="min-h-screen bg-white pb-16">
             <SEO
                 title="Privacy Policy | Centro Lavaggio Mosè"
                 description="Informativa sulla privacy di Centro Lavaggio Mosè a Lercara Friddi."
             />
-            <div className="container mx-auto px-4 max-w-4xl">
+
+            {/* Simple Navigation */}
+            <nav className="border-b bg-white sticky top-0 z-50">
+                <div className="container mx-auto px-4 h-20 flex items-center justify-between">
+                    <Link to="/" className="flex items-center gap-2 text-slate-900 hover:text-blue-600 transition-colors">
+                        <ArrowLeft size={20} />
+                        <span className="font-semibold text-2xl">
+                            Centro Lavaggio<span className="text-blue-500"> Mosè</span>
+                        </span>
+                    </Link>
+                </div>
+            </nav>
+
+            <div className="container mx-auto px-4 max-w-4xl pt-12">
                 <h1 className="text-4xl font-bold text-slate-900 mb-8 border-b pb-4">Informativa sulla Privacy</h1>
 
                 <div className="prose prose-slate max-w-none space-y-6 text-slate-700">
