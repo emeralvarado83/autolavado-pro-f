@@ -9,8 +9,8 @@ export const Home = () => {
   return (
     <main className="min-h-screen">
       <SEO
-        title="Centro Lavaggio Mosè | Home"
-        description="Il miglior servizio di lavaggio auto. Qualità e professionalità per il tuo veicolo."
+        title="Centro Lavaggio Mosè | Lercara Friddi Palermo"
+        description="Centro Lavaggio Mosè è un autolavaggio professionale a Lercara Friddi specializzato in lavaggio auto completo, pulizia interna e trattamenti per la cura del veicolo."
       />
       <HeroSlider />
       <TipsSection />
