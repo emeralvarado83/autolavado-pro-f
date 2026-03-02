@@ -12,18 +12,61 @@ interface SEOProps {
 
 export const SEO: React.FC<SEOProps> = ({
   title,
-  description = "Centro Lavaggio Mosè - Il miglior autolavaggio per la tua auto.",
+  description = "Centro Lavaggio Mosè è un autolavaggio professionale a Lercara Friddi specializzato in lavaggio auto completo, pulizia interna e trattamenti per la cura del veicolo.",
   type = "website",
   name = "Centro Lavaggio Mosè",
   image = "",
   url = "https://centrolavaggiomose.it"
 }) => {
+  const schemaOrgJSONLD = {
+    "@context": "http://schema.org",
+    "@type": "LocalBusiness",
+    "name": name,
+    "image": image,
+    "url": url,
+    "telephone": "+39 02 1234 5678",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Lercara Friddi",
+      "addressLocality": "Lercara Friddi",
+      "addressRegion": "PA",
+      "postalCode": "90025",
+      "addressCountry": "IT"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 37.7479,
+      "longitude": 13.6033
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "08:00",
+        "closes": "20:00"
+      }
+    ]
+  };
+
   return (
     <Helmet>
       {/* Standard metadata tags */}
       <title>{title}</title>
       <meta name='description' content={description} />
       <link rel="canonical" href={url} />
+
+      {/* Structured Data */}
+      <script type="application/ld+json">
+        {JSON.stringify(schemaOrgJSONLD)}
+      </script>
 
       {/* Facebook tags */}
       <meta property="og:type" content={type} />
