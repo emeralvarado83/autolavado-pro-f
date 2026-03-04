@@ -8,7 +8,7 @@ export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  const { isAdmin, content } = useContent();
+  const { isAdmin, content, loading } = useContent();
 
   const isHome = location.pathname === '/';
   const isServices = location.pathname === '/services';
@@ -59,34 +59,36 @@ export const Header = () => {
       <div className="container mx-auto px-4 flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3 group">
-          {content.contact.logo_url ? (
-            <div className="h-10 flex items-center">
-              <img
-                src={content.contact.logo_url}
-                alt="Logo"
-                className="h-10 w-auto object-contain"
-              />
-            </div>
-          ) : (
-            <>
-              <div
-                className={cn(
-                  "p-2 rounded-full transition-colors",
-                  scrolled ? "bg-blue-600 text-white" : "bg-white text-blue-600"
-                )}
-              >
-                <Car size={24} />
+          <div className={cn("transition-opacity duration-300", loading ? "opacity-0" : "opacity-100")}>
+            {content.contact.logo_url ? (
+              <div className="h-10 flex items-center">
+                <img
+                  src={content.contact.logo_url}
+                  alt="Logo"
+                  className="h-10 w-auto object-contain"
+                />
               </div>
-              <span
-                className={cn(
-                  "font-bold text-xl tracking-tight transition-colors",
-                  scrolled ? "text-slate-800" : "text-white"
-                )}
-              >
-                Centro Lavaggio<span className="text-blue-500"> Mosè</span>
-              </span>
-            </>
-          )}
+            ) : (
+              <>
+                <div
+                  className={cn(
+                    "p-2 rounded-full transition-colors",
+                    scrolled ? "bg-blue-600 text-white" : "bg-white text-blue-600"
+                  )}
+                >
+                  <Car size={24} />
+                </div>
+                <span
+                  className={cn(
+                    "font-bold text-xl tracking-tight transition-colors",
+                    scrolled ? "text-slate-800" : "text-white"
+                  )}
+                >
+                  Centro Lavaggio<span className="text-blue-500"> Mosè</span>
+                </span>
+              </>
+            )}
+          </div>
         </Link>
 
         {/* Desktop Nav */}
